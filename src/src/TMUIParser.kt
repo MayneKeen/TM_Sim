@@ -7,12 +7,16 @@ class TM_UI_Parser {                                             /*have been see
     //sample
 
 
-    fun parseStates(inputFile:String):List<String> {
+    fun parseStates(inputFile:String):MutableList<State> {
 
         TODO()
     }
 
-    fun parseTape(inputFile:String):List<String> {
+    fun parseTape(inputFile:String):MutableList<String> {
+
+        TODO()
+    }
+    fun parseAlphabet(inputFile:String):MutableList<String> {
 
         TODO()
     }
