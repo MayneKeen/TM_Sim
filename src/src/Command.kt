@@ -1,5 +1,5 @@
 package src
 
 enum class Command(val symbol:String) {
-    Right(">"), Left("<"), NoMove(".")
+    Right(">"), Left("<"), NoMove("."), IllegalCommand("~")
 }

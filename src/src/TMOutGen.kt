@@ -3,7 +3,7 @@ package src
                                                                             *and some methods to make an output
                                                                             */
 
-class TM_Out_Gen {
+class TMOutGen {
     fun write(){
 
     }

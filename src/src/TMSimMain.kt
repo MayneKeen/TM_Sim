@@ -4,9 +4,9 @@ import java.lang.Exception
 
 class TMSimMain {                                                //just a *main* class
 
-    private var inTape = "inTape.txt"
-    private var inStates = "inStates.txt"
-    private var inAlph = "inAlph.txt"
+    private var inTape = "tape.txt"
+    private var inStates = "states.txt"
+    private var inAlph = "alphabet.txt"
 
     fun setInTape(input:String){
         if(input != "") {
@@ -28,9 +28,9 @@ class TMSimMain {                                                //just a *main*
 
 
 
-    private lateinit var parser:TM_UI_Parser
+    private lateinit var parser:TMUIParser
 
-    private lateinit var out_Gen:TM_Out_Gen
+    private lateinit var out_Gen:TMOutGen
 
     private var tape:MutableList<String> = parser.parseTape(inTape)
     private var states:MutableList<State> = parser.parseStates(inStates)
