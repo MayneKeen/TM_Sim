@@ -4,5 +4,10 @@ package src
                                                                             */
 
 class TM_Out_Gen {
+    fun write(){
 
+    }
+    fun writeln(){
+
+    }
 }
