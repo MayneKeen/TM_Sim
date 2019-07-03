@@ -32,7 +32,7 @@ class TMSimMain {                                                //just a *main*
 
     private lateinit var out_Gen:TMOutGen
 
-    private var tape:MutableList<String> = parser.parseTape(inTape)
+    private var tape:String = parser.parseTape(inTape)
     private var states:MutableList<State> = parser.parseStates(inStates)
     private var alphabet:String = parser.parseAlphabet(inAlph)
 
@@ -50,7 +50,7 @@ class TMSimMain {                                                //just a *main*
                     "please choose one of them")
             System.exit(1)
         }
-        var currentTape:MutableList<String> = tape
+        var currentTape:String = tape
 
         when(mode) {
             //"normal" - just a normal mode
@@ -74,9 +74,9 @@ class TMSimMain {                                                //just a *main*
 
 
 
-    private fun normal(tape:MutableList<String>, modified: Boolean, number: Int, statesQuantity: Int) {
+    private fun normal(tape:String, modified: Boolean, number: Int, statesQuantity: Int) {
         try {
-            var currentTape: MutableList<String> = tape
+            var currentTape: String = tape
 
             var currentPosition = 0
 
@@ -93,7 +93,7 @@ class TMSimMain {                                                //just a *main*
                 }
 
 
-                var currentSymbol: String = currentTape[currentPosition]
+                var currentSymbol: Char = currentTape[currentPosition]
                 var symState = alphabet.indexOf(currentSymbol)
 
                 var currentCommand = currentState.getMotion()[symState]
@@ -101,7 +101,9 @@ class TMSimMain {                                                //just a *main*
                 var newSymbol = currentState.getSymbols()[symState]
 
 
-                currentTape[currentPosition] = newSymbol
+                var temp = currentTape.toMutableList()
+                temp[currentPosition] = newSymbol
+                currentTape = temp.toString()
 
                 when (currentCommand) {
                     Command.Right -> currentPosition++

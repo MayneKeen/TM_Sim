@@ -23,7 +23,7 @@ class TMUIParser {
             val parsedLine = line.split(" ", "->")
 
             var number = Integer.parseInt(parsedLine[0])
-            var symbols:MutableList<String> = mutableListOf()
+            var symbols:String = ""
             var motion:MutableList<Command> = mutableListOf()
             var nextStates:MutableList<Int> = mutableListOf()
 
@@ -31,13 +31,13 @@ class TMUIParser {
             for (i in 1 until parsedLine.size) {
 
                 if(parsedLine[i] == "nonSpec") {
-                    symbols.add("nonSpec")
+                    symbols = "nonSpec"
                     motion.add(Command.IllegalCommand)
                     nextStates.add(0)
                     continue
                 }
 
-                symbols.add(parsedLine[i].get(0)+"")
+                symbols += parsedLine[i].get(0)
                 motion.add(
                     when(parsedLine[i].get(1)+"") {
                         "<" -> Command.Left
@@ -56,11 +56,7 @@ class TMUIParser {
 
 
 
-    fun parseTape(inputFile:String):MutableList<String> {
-        var tape:MutableList<String> = mutableListOf()
-
-        return tape
-    }
+    fun parseTape(inputFile:String):String = File(inputFile).readLines().toString()
 
 
     fun parseAlphabet(inputFile:String):String = File(inputFile).readLines().toString()

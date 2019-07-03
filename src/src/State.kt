@@ -5,13 +5,13 @@ class State {
 
 
     private var number:Int
-    private var symbols:MutableList<String>
+    private var symbols:String
     private var motion:MutableList<Command>
     private var nextStates:MutableList<Int>
 
     fun getNumber():Int = number
 
-    fun getSymbols():MutableList<String> = symbols
+    fun getSymbols():String = symbols
 
     fun getMotion():MutableList<Command> = motion
 
@@ -24,7 +24,7 @@ class State {
         this.number = number
     }
 
-    private fun setSymbols(symbols:MutableList<String>) {
+    private fun setSymbols(symbols:String) {
         this.symbols = symbols
     }
 
@@ -36,7 +36,7 @@ class State {
         this.nextStates = nextStates
     }
 
-    constructor(number:Int, symbols:MutableList<String>, motion:MutableList<Command>,
+    constructor(number:Int, symbols:String, motion:MutableList<Command>,
                 nextStates:MutableList<Int>) {
         this.number = number
         this.symbols = symbols
