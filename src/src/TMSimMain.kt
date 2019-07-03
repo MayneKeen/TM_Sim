@@ -34,7 +34,7 @@ class TMSimMain {                                                //just a *main*
 
     private var tape:MutableList<String> = parser.parseTape(inTape)
     private var states:MutableList<State> = parser.parseStates(inStates)
-    private var alphabet:MutableList<String> = parser.parseAlphabet(inAlph)
+    private var alphabet:String = parser.parseAlphabet(inAlph)
 
 
 
@@ -76,7 +76,6 @@ class TMSimMain {                                                //just a *main*
 
     private fun normal(tape:MutableList<String>, modified: Boolean, number: Int, statesQuantity: Int) {
         try {
-            //val initialTape:List<String> = tape
             var currentTape: MutableList<String> = tape
 
             var currentPosition = 0

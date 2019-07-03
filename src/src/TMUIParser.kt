@@ -16,7 +16,7 @@ class TMUIParser {
 
         for (line in lines) {
             if(!regex.matches(line)){
-                print("Please write states in a correct format. E.g.: 8 -> h>8 emptyState s>1 _.0")
+                print("Please write states in a correct format. E.g.: 8 -> h>8 nonSpec s>1 _.0")
                 System.exit(1)                              // 0     1       2      3    4
             }
 
@@ -30,8 +30,8 @@ class TMUIParser {
 
             for (i in 1 until parsedLine.size) {
 
-                if(parsedLine[i] == "emptyState") {
-                    symbols.add("noSymbol")
+                if(parsedLine[i] == "nonSpec") {
+                    symbols.add("nonSpec")
                     motion.add(Command.IllegalCommand)
                     nextStates.add(0)
                     continue
@@ -45,7 +45,7 @@ class TMUIParser {
                         "." -> Command.NoMove
                         else -> Command.IllegalCommand
                     })
-                nextStates.add(Integer.parseInt(parsedLine[i].get(2)+""))
+                nextStates.add(Integer.parseInt(parsedLine[i].substring(2)))
             }
 
             var state = State(number, symbols, motion, nextStates)
@@ -57,13 +57,12 @@ class TMUIParser {
 
 
     fun parseTape(inputFile:String):MutableList<String> {
+        var tape:MutableList<String> = mutableListOf()
 
-        TODO()
+        return tape
     }
 
 
-    fun parseAlphabet(inputFile:String):MutableList<String> {
+    fun parseAlphabet(inputFile:String):String = File(inputFile).readLines().toString()
 
-        TODO()
-    }
 }
