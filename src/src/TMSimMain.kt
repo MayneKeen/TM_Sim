@@ -117,11 +117,12 @@ class TMSimMain {                                                //just a *main*
                     }
 
                 }
-
                 currentState = states[cNextState]
+
+                counter++
             }
 
-            counter++
+
 
             if (currentState.getNumber() == -1) {
                 print("Program is finished")
