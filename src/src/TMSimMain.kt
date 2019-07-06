@@ -1,6 +1,7 @@
 package src
 
 import java.lang.Exception
+import java.lang.IllegalArgumentException
 
 class TMSimMain {                                                //just a *main* class
 
@@ -33,8 +34,9 @@ class TMSimMain {                                                //just a *main*
     private lateinit var out_Gen:TMOutGen
 
     private var tape:String = parser.parseTape(inTape)
-    private var states:MutableList<State> = parser.parseStates(inStates)
     private var alphabet:String = parser.parseAlphabet(inAlph)
+    private var states:MutableList<State> = parser.parseStates(inStates, alphabet)
+
 
 
 
@@ -108,6 +110,12 @@ class TMSimMain {                                                //just a *main*
                 when (currentCommand) {
                     Command.Right -> currentPosition++
                     Command.Left -> currentPosition--
+                    Command.IllegalCommand -> {
+                        currentTape = tape
+                        throw IllegalArgumentException("Illegal command has been found" +
+                                " at ${currentState.getNumber()}, symbol:($currentSymbol)")
+                    }
+
                 }
 
                 currentState = states[cNextState]
@@ -115,14 +123,21 @@ class TMSimMain {                                                //just a *main*
 
             counter++
 
-            if (currentState.getNumber() == 0) {
+            if (currentState.getNumber() == -1) {
                 print("Program is finished")
+                //output
                 System.exit(0)
             }
 
         }
+        catch (E:IllegalArgumentException) {
+            print(E.message)
+            //output, everything should be returned to it's initial values
+            System.exit(1)
+        }
         catch(E:Exception){
             print("Smth went wrong..")
+            //output, everything should be returned to it's initial values
             System.exit(1)
         }
     }

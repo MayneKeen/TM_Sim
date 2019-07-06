@@ -1,6 +1,8 @@
 package src
 
 import java.io.File
+import javax.print.attribute.IntegerSyntax
+
 /*have been seen parsing user input including
  *"in" files and maybe console input*/
 
@@ -8,57 +10,65 @@ import java.io.File
 class TMUIParser {
 
 
-    fun parseStates(inputFile:String):MutableList<State> {
-        val regex = """\d+\s->\s[(\s.[<.>]\d+)|.+]""".toRegex()         // \d+\s->\s[(\s.[<.>]\d+)|.+]+
-        var states:MutableList<State> = mutableListOf()                        //8 -> h>8 noCap s>1 _.0
-                                                                               //0     1    2      3
-        val lines:List<String> = File(inputFile).readLines()
+    fun parseStates(inputFile: String, alphabet:String): MutableList<State> {
+        var states: MutableList<State> = mutableListOf()
+        val lines: List<String> = File(inputFile).readLines()
+        val regex = """\d+\s->\s(.\s=\s(.[<\.>]\d+\s)|(.+))+""".toRegex()
 
         for (line in lines) {
-            if(!regex.matches(line)){
-                print("Please write states in a correct format. E.g.: 8 -> h>8 nonSpec s>1 _.0")
-                System.exit(1)                              // 0     1       2      3    4
+            for (line in lines) {
+                if (!regex.matches(line)) {
+                    print("Please write states in a correct format. E.g.: 8 -> a=h>8 b=nonSpec c=s>1 x=_.0")
+                    System.exit(1)                              // 0       1       2      3    4
+                }
             }
+        }
 
-            val parsedLine = line.split(" ", "->")
+
+        for (line in lines) {
+            val parsedLine = line.split(" -> ", " ")
 
             var number = Integer.parseInt(parsedLine[0])
-            var symbols:String = ""
-            var motion:MutableList<Command> = mutableListOf()
-            var nextStates:MutableList<Int> = mutableListOf()
+            var symbols: MutableList<Char> = mutableListOf()
+            var motion: MutableList<Command> = mutableListOf()
+            var nextStates: MutableList<Int> = mutableListOf()
 
+            for(i in 1 until parsedLine.size) {
+                val part = parsedLine[i]
+                val tapeSym = part[0]
+                var index = alphabet.indexOf(tapeSym)
 
-            for (i in 1 until parsedLine.size) {
-
-                if(parsedLine[i] == "nonSpec") {
-                    symbols = "nonSpec"
-                    motion.add(Command.IllegalCommand)
-                    nextStates.add(0)
+                if(part.contains("nonSpec")) {
+                    symbols.add(index, ' ')
+                    motion.add(index, Command.IllegalCommand)
+                    nextStates.add(index, -1)
                     continue
                 }
 
-                symbols += parsedLine[i].get(0)
-                motion.add(
-                    when(parsedLine[i].get(1)+"") {
-                        "<" -> Command.Left
-                        ">" -> Command.Right
-                        "." -> Command.NoMove
-                        else -> Command.IllegalCommand
-                    })
-                nextStates.add(Integer.parseInt(parsedLine[i].substring(2)))
-            }
 
-            var state = State(number, symbols, motion, nextStates)
-            states.add(state)
+                val sym = part[2]
+                val command =
+                    when (part[3]) {
+                        '<' -> Command.Left
+                        '>' -> Command.Right
+                        '.' -> Command.NoMove
+                        else -> Command.IllegalCommand
+                    }
+                val next = Integer.parseInt(part.substring(4))
+                nextStates.add(index, next)
+
+                val state = State(number, symbols, motion, nextStates)
+                states.add(state)
+            }
         }
         return states
     }
 
 
+        fun parseTape(inputFile: String): String = File(inputFile).readLines().toString()
 
-    fun parseTape(inputFile:String):String = File(inputFile).readLines().toString()
 
+        fun parseAlphabet(inputFile: String): String = File(inputFile).readLines().toString()
 
-    fun parseAlphabet(inputFile:String):String = File(inputFile).readLines().toString()
 
 }
