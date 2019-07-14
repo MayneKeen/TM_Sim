@@ -9,6 +9,30 @@ class TMSimMachine() {                                               //just a *m
     private var inStates = "states.txt"
     private var inAlph = "alphabet.txt"
 
+    private var parser:TMUIParser = TMUIParser()
+    private var outGen:TMOutGen = TMOutGen()
+
+    private var tape:String = parser.parseTape(inTape)
+    private var alphabet:String = parser.parseAlphabet(inAlph)
+    private var states:MutableList<State> = parser.parseStates(inStates, alphabet)
+
+
+
+    fun setTape(tape:String) {
+        this.tape = tape
+    }
+    fun getTape():String = tape
+
+    fun setAlphabet(alphabet:String) {
+        this.alphabet = alphabet
+    }
+    fun getAlphabet():String = alphabet
+
+    fun setStates(states:MutableList<State>) {
+        this.states = states
+    }
+    fun getStates():MutableList<State> = states
+
     fun setInTape(input:String){
         if(input != "") {
             inTape = input
@@ -22,22 +46,8 @@ class TMSimMachine() {                                               //just a *m
         else return
     }
 
-    fun getInTape() = inTape
-    fun getInStates() = inStates
-
-
-
-
-
-    private var parser:TMUIParser = TMUIParser()
-
-    private var outGen:TMOutGen = TMOutGen()
-
-    private var tape:String = parser.parseTape(inTape)
-    private var alphabet:String = parser.parseAlphabet(inAlph)
-    private var states:MutableList<State> = parser.parseStates(inStates, alphabet)
-
-
+    fun getInTape():String = inTape
+    fun getInStates():String = inStates
 
 
     /*mode,
@@ -109,6 +119,12 @@ class TMSimMachine() {                                               //just a *m
                     val temp = currentTape.toMutableList()
                     temp[currentPosition] = newSymbol
                     currentTape = temp.toString()
+
+
+                    if(currentCommand==Command.Right && currentPosition==currentTape.length-1) {
+                        currentTape+=" "                                              //imitation of infinite tape
+                    }
+
 
                     when (currentCommand) {
                         Command.Right -> currentPosition++
