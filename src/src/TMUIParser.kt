@@ -66,7 +66,7 @@ class TMUIParser {
 
             }
             val state = State(number, symbols, motion, nextStates)
-            states.add(state)
+            states.add(number, state)
         }
         return states
     }

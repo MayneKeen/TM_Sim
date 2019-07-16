@@ -10,9 +10,10 @@ class TMSimMachine() {                                               //just a *m
     private var inTape = "tape.txt"
     private var inStates = "states.txt"
     private var inAlph = "alphabet.txt"
+    private var outFile = "output.txt"
 
-    private var parser:TMUIParser = TMUIParser()
-    private var outGen:TMOutGen = TMOutGen()
+    var parser:TMUIParser = TMUIParser()
+    var outGen:TMOutGen = TMOutGen()
 
     private var tape:String = parser.parseTape(inTape)
     private var alphabet:String = parser.parseAlphabet(inAlph)
@@ -47,7 +48,14 @@ class TMSimMachine() {                                               //just a *m
         }
         else return
     }
+    fun setOutFile(input:String){
+        if(input != "") {
+            outFile = input
+        }
+        else return
+    }
 
+    fun getOutFile():String = outFile
     fun getInTape():String = inTape
     fun getInStates():String = inStates
 
@@ -74,11 +82,11 @@ class TMSimMachine() {                                               //just a *m
                 //"modified" - program will be executed in $statesQuantity$ steps
                 "modified" -> normal(currentTape, true, 0, statesQuantity)
 
-                /*"proceed" - program' execution will be continued
+                /*"proceed" - program' execution will be continued from
              *if you wanna continue its execution in several steps, just choose
              * $statesQuantity$!=0
-            */
-                "proceed" -> normal(currentTape, false, number, statesQuantity)
+
+                "proceed" -> normal(currentTape, true, number, statesQuantity)*/
             }
         }
         catch(E:IllegalArgumentException) {
@@ -88,7 +96,7 @@ class TMSimMachine() {                                               //just a *m
     }
 
 
-    private fun normal(tape:String, modified: Boolean, number: Int, statesQuantity: Int) {
+    private fun normal(tape:String, modified: Boolean, number: Int, stepsQuantity: Int) {
             var currentTape: String = tape //ok
             var currentPosition = 0
 
@@ -98,9 +106,10 @@ class TMSimMachine() {                                               //just a *m
             try {
                 while (currentState.getNumber() != -1) {
 
-                    if (modified && counter==statesQuantity) {
-                        print("$statesQuantity steps of your program have just been executed")
-                        System.exit(0)
+                    if (modified && counter==stepsQuantity) {
+                        print("$stepsQuantity steps of your program have just been executed")
+                        outGen.write(currentTape, outFile)
+                        return
                     }
 
                     val currentSymbol: Char = currentTape[currentPosition]
@@ -141,6 +150,8 @@ class TMSimMachine() {                                               //just a *m
                         Command.Right -> currentPosition++
                         Command.Left -> currentPosition--
                         Command.IllegalCommand -> {
+
+
                             currentTape = tape
                             throw IllegalArgumentException(
                                 "Illegal command has been found" +
@@ -157,7 +168,7 @@ class TMSimMachine() {                                               //just a *m
                         while(currentTape[currentTape.length-1] == ' '){
                             currentTape = currentTape.substring(0,currentTape.length-1)
                         }
-                        outGen.write(currentTape, "output.txt")
+                        outGen.write(currentTape, outFile)
                         //output
                         return
                     }
@@ -168,13 +179,13 @@ class TMSimMachine() {                                               //just a *m
             }
         catch (E:IllegalArgumentException) {
             outGen.write(E.message.toString(), "log.txt")
-            outGen.write(currentTape, "output.txt")
+            outGen.write(currentTape, outFile)
             return
             //System.exit(1)
         }
         catch(E:Exception){
             outGen.write(E.message.toString(), "log.txt")
-            outGen.write(currentTape, "output.txt")
+            outGen.write(currentTape, outFile)
             return
             //System.exit(1)
         }

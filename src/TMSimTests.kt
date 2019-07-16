@@ -41,7 +41,33 @@ class TMSimTests{
 
     }
 
-   
+    @Test
+    @Tag("Modified mode test")
+    fun thirdTestTMSimMachine() {
+        var machine = TMSimMachine()
+
+        machine.setAlphabet(machine.parser.parseAlphabet("alphabet2.txt"))
+        machine.setStates(machine.parser.parseStates("states2.txt", machine.getAlphabet()) )
+        machine.setTape(machine.parser.parseTape("tape2.txt"))
+        machine.setOutFile("output2.txt")
+
+        machine.main("modified",0, 5)
+        assertFileContent("output2.txt", "polyt56789")
+    }
+
+
+    @Test
+    @Tag("One more test")
+    fun fourthTestTMSimMachine() {
+        var machine = TMSimMachine()
+
+        machine.setAlphabet(machine.parser.parseAlphabet("alphabet2.txt"))
+        machine.setStates(machine.parser.parseStates("states2.txt", machine.getAlphabet()) )
+        machine.setTape(machine.parser.parseTape("tape2.txt"))
+
+        machine.main("normal",0, 5)
+        assertFileContent("output.txt", "polytech!!")
+    }
 
 
 }
