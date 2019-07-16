@@ -15,20 +15,20 @@ class TMSimTests{
 
 
     @Test
-    @Tag("")
+    @Tag("Test")
     fun testTMSimMachine() {
         var machine = TMSimMachine()
         machine.setAlphabet("01_")
-        machine.setTape("_001001100")
+        machine.setTape("001001100_")
 
         var state0 = State(0,"11_".toMutableList(),
             mutableListOf(Command.Right, Command.Right, Command.Right),
-            mutableListOf(0, 0, 0))
+            mutableListOf(0, 0, -1))
         machine.setStates(mutableListOf(state0))
 
 
         machine.main("normal",0, 0)
-        assertFileContent("output.txt", "11_")
+        assertFileContent("output.txt", "111111111_")
     }
 
 
