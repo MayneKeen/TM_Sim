@@ -88,22 +88,12 @@ class TMSimMachine() {                                               //just a *m
     }
 
 
-
-
-
-
-
     private fun normal(tape:String, modified: Boolean, number: Int, statesQuantity: Int) {
-
-
             var currentTape: String = tape //ok
             var currentPosition = 0
 
-
             var currentState: State = states[number]
             var counter = 0
-
-//correct 'till this moment
 
             try {
                 while (currentState.getNumber() != -1) {
@@ -113,10 +103,13 @@ class TMSimMachine() {                                               //just a *m
                         System.exit(0)
                     }
 
-
                     val currentSymbol: Char = currentTape[currentPosition]
 
+
+
+
                     val symState = alphabet.indexOf(currentSymbol)        //Ыeat
+
 
 
 
@@ -136,16 +129,13 @@ class TMSimMachine() {                                               //just a *m
                         currentTape = temp1 + temp2
                     }
 
-
                     if(currentPosition == 0){
                         currentTape = newSymbol + currentTape.substring(1)
                     }
 
-
                     if(currentCommand==Command.Right && currentPosition==currentTape.length-1) {
                         currentTape+=" "                                              //imitation of infinite tape
                     }
-
 
                     when (currentCommand) {
                         Command.Right -> currentPosition++
@@ -164,15 +154,15 @@ class TMSimMachine() {                                               //just a *m
 
                     if(cNextState == -1) {
                         print("Program is finished")
+                        while(currentTape[currentTape.length-1] == ' '){
+                            currentTape = currentTape.substring(0,currentTape.length-1)
+                        }
                         outGen.write(currentTape, "output.txt")
                         //output
                         return
                     }
 
                     currentState = states[cNextState]
-
-
-
                     counter++
                 }
             }
@@ -183,7 +173,6 @@ class TMSimMachine() {                                               //just a *m
             //System.exit(1)
         }
         catch(E:Exception){
-
             outGen.write(E.message.toString(), "log.txt")
             outGen.write(currentTape, "output.txt")
             return

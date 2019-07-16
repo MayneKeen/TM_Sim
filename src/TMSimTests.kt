@@ -16,7 +16,7 @@ class TMSimTests{
 
 
     @Test
-    @Tag("Test")
+    @Tag("Functionality")
     fun testTMSimMachine() {
         var machine = TMSimMachine()
         machine.setAlphabet("01_")
@@ -27,15 +27,21 @@ class TMSimTests{
             mutableListOf(0, 0, -1))
         machine.setStates(mutableListOf(state0))
 
-
         machine.main("normal",0, 0)
-        assertFileContent("output.txt", "111111111_ ")
+        assertFileContent("output.txt", "111111111_")
     }
 
+    @Test
+    @Tag("Parsing user input")
+    fun secondTestTmSimMachine() {
+        var machine = TMSimMachine()
 
+        machine.main("normal",0, 0)
+        assertFileContent("output.txt", "112200120_")
 
+    }
 
-
+   
 
 
 }

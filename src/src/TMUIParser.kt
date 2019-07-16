@@ -2,7 +2,6 @@ package src
 
 import java.io.File
 import java.lang.IllegalArgumentException
-import src.*
 
 
 /*have been seen parsing user input including
@@ -10,8 +9,6 @@ import src.*
 
 
 class TMUIParser {
-
-
     constructor()
 
     fun parseStates(inputFile: String, alphabet:String): MutableList<State> {
@@ -31,7 +28,6 @@ class TMUIParser {
             }
         }
 
-
         for (line in lines) {
             val parsedLine = line.split(" -> ", " ")
 
@@ -45,13 +41,13 @@ class TMUIParser {
                 val tapeSym = part[0]
                 val index = alphabet.indexOf(tapeSym)
 
+
                 if(part.contains("nonSpec")) {
                     symbols.add(index, ' ')
                     motion.add(index, Command.IllegalCommand)
                     nextStates.add(index, -1)
                     continue
                 }
-
 
                 val sym = part[2]
                 val command =
@@ -67,18 +63,19 @@ class TMUIParser {
                 motion.add(index, command)
                 nextStates.add(index, next)
 
-                val state = State(number, symbols, motion, nextStates)
-                states.add(state)
+
             }
+            val state = State(number, symbols, motion, nextStates)
+            states.add(state)
         }
         return states
     }
-
-
-        fun parseTape(inputFile: String): String = File(inputFile).readLines().toString()
-
-
-        fun parseAlphabet(inputFile: String): String = File(inputFile).readLines().toString()
-
-
+        fun parseTape(inputFile: String): String {
+            var list = File(inputFile).readLines()
+            return list.joinToString()
+        }
+        fun parseAlphabet(inputFile: String): String {
+            var list = File(inputFile).readLines()
+            return list.joinToString()
+        }
 }
