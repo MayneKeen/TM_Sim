@@ -1,4 +1,6 @@
 package src
+import src.*
+
 
 class State(
     private var number: Int,

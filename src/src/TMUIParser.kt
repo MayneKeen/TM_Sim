@@ -2,6 +2,8 @@ package src
 
 import java.io.File
 import java.lang.IllegalArgumentException
+import src.*
+
 
 /*have been seen parsing user input including
  *"in" files and maybe console input*/

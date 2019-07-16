@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import java.io.File
+import src.*
 
 class TMSimTests{
 
@@ -28,7 +29,7 @@ class TMSimTests{
 
 
         machine.main("normal",0, 0)
-        assertFileContent("output.txt", "111111111_")
+        assertFileContent("output.txt", "111111111_ ")
     }
 
 

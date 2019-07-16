@@ -2,6 +2,8 @@ package src
 
 import java.lang.Exception
 import java.lang.IllegalArgumentException
+import src.*
+
 
 class TMSimMachine() {                                               //just a *main* class
 
@@ -92,33 +94,52 @@ class TMSimMachine() {                                               //just a *m
 
 
     private fun normal(tape:String, modified: Boolean, number: Int, statesQuantity: Int) {
-            var currentTape: String = tape
+
+
+            var currentTape: String = tape //ok
             var currentPosition = 0
 
 
             var currentState: State = states[number]
             var counter = 0
 
-            try {
-                while (currentState.getNumber() != 0) {
+//correct 'till this moment
 
-                    if (modified && counter == statesQuantity) {
+            try {
+                while (currentState.getNumber() != -1) {
+
+                    if (modified && counter==statesQuantity) {
                         print("$statesQuantity steps of your program have just been executed")
                         System.exit(0)
                     }
 
 
                     val currentSymbol: Char = currentTape[currentPosition]
-                    val symState = alphabet.indexOf(currentSymbol)
+
+                    val symState = alphabet.indexOf(currentSymbol)        //Ыeat
+
+
 
                     val currentCommand = currentState.getMotion()[symState]
                     val cNextState = currentState.getNextStates()[symState]
                     val newSymbol = currentState.getSymbols()[symState]
 
 
-                    val temp = currentTape.toMutableList()
+                        /*val temp = currentTape.toMutableList()
                     temp[currentPosition] = newSymbol
-                    currentTape = temp.toString()
+                    currentTape = temp.toString()*/
+                    if(currentPosition>0) {
+                        var temp1 = currentTape.substring(0, currentPosition )
+                        val temp2 = currentTape.substring(currentPosition + 1)
+
+                        temp1 += newSymbol
+                        currentTape = temp1 + temp2
+                    }
+
+
+                    if(currentPosition == 0){
+                        currentTape = newSymbol + currentTape.substring(1)
+                    }
 
 
                     if(currentCommand==Command.Right && currentPosition==currentTape.length-1) {
@@ -140,31 +161,33 @@ class TMSimMachine() {                                               //just a *m
 
                         else -> currentPosition
                     }
+
+                    if(cNextState == -1) {
+                        print("Program is finished")
+                        outGen.write(currentTape, "output.txt")
+                        //output
+                        return
+                    }
+
                     currentState = states[cNextState]
+
+
 
                     counter++
                 }
-
-
-
-                if (currentState.getNumber() == -1) {
-                    print("Program is finished")
-                    outGen.write(currentTape, "output.txt")
-                    //output
-                    System.exit(0)
-                }
-
             }
         catch (E:IllegalArgumentException) {
             outGen.write(E.message.toString(), "log.txt")
             outGen.write(currentTape, "output.txt")
-
-            System.exit(1)
+            return
+            //System.exit(1)
         }
         catch(E:Exception){
+
             outGen.write(E.message.toString(), "log.txt")
             outGen.write(currentTape, "output.txt")
-            System.exit(1)
+            return
+            //System.exit(1)
         }
     }
 

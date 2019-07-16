@@ -1,6 +1,8 @@
 package src
 
 import java.io.File
+import src.*
+
 
 /*should contain a copy of current tape
 *and some methods to make an output
