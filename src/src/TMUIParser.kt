@@ -16,6 +16,9 @@ class TMUIParser {
         val lines: List<String> = File(inputFile).readLines()
         val regex = """\d+\s->\s(.\s=\s(.[<\.>]\d+\s)|(.+))+""".toRegex()
 
+        if(lines.isEmpty())
+            return mutableListOf()
+
         for (line in lines) {
             for (line in lines) {
                 if (!regex.matches(line)) {
@@ -72,10 +75,14 @@ class TMUIParser {
     }
         fun parseTape(inputFile: String): String {
             var list = File(inputFile).readLines()
+            if(list.isEmpty())
+                return ""
             return list.joinToString()
         }
         fun parseAlphabet(inputFile: String): String {
             var list = File(inputFile).readLines()
+            if(list.isEmpty())
+                return ""
             return list.joinToString()
         }
 }

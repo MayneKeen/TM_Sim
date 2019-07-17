@@ -26,7 +26,11 @@ class TMSimMachine() {                                               //just a *m
     var currentState: State = states[0]
 
 
-
+    fun recompile() {
+        tape = parser.parseTape(inTape)
+        alphabet = parser.parseAlphabet(inAlph)
+        states = parser.parseStates(inStates, alphabet)
+    }
 
 
 
@@ -64,6 +68,14 @@ class TMSimMachine() {                                               //just a *m
         else return
     }
 
+    fun setInAlph(input: String) {
+        if(input != "") {
+            inAlph = input
+        }
+        else return
+    }
+
+    fun getInAlph():String = inAlph
     fun getOutFile():String = outFile
     fun getInTape():String = inTape
     fun getInStates():String = inStates
@@ -183,6 +195,7 @@ class TMSimMachine() {                                               //just a *m
                             currentTape = currentTape.substring(0,currentTape.length-1)
                         }
                         outGen.write(currentTape, outFile)
+                        System.exit(0)
                         //output
                         return
                     }

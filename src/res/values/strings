@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="modes">"normal" - just a normal mode\n"modified" - program will be executed in several steps</string>
+</resources>

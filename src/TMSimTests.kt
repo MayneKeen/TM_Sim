@@ -36,6 +36,7 @@ class TMSimTests{
     fun secondTestTmSimMachine() {
         var machine = TMSimMachine()
 
+
         machine.main("normal",0, 0)
         assertFileContent("output.txt", "112200120_")
 
