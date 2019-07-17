@@ -69,6 +69,21 @@ class TMSimTests{
         assertFileContent("output.txt", "polytech!!")
     }
 
+    @Test
+    @Tag("Proceed test")
+    fun fifthTestTMSimMachine() {
+        var machine = TMSimMachine()
+
+        machine.setAlphabet(machine.parser.parseAlphabet("alphabet2.txt"))
+        machine.setStates(machine.parser.parseStates("states2.txt", machine.getAlphabet()) )
+        machine.setTape(machine.parser.parseTape("tape2.txt"))
+        machine.setOutFile("output2.txt")
+
+        machine.main("modified",0, 5)
+
+        machine.main("proceed", machine.currentState.getNumber(), 8)
+        assertFileContent("output2.txt", "polytech!!")
+    }
 
 }
 

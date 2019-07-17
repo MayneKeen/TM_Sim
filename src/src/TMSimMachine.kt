@@ -21,6 +21,15 @@ class TMSimMachine() {                                               //just a *m
 
 
 
+    var currentTape: String = tape
+    var currentPosition = 0
+    var currentState: State = states[0]
+
+
+
+
+
+
     fun setTape(tape:String) {
         this.tape = tape
     }
@@ -65,28 +74,29 @@ class TMSimMachine() {                                               //just a *m
      *statesQuantity - number of steps you need your machine to execute
      *  in "proceed" or "modified" modes
      */
-    fun main(mode:String, number: Int, statesQuantity: Int) {
+    fun main(mode:String, number: Int, stepsQuantity: Int) {
         if(!(mode=="normal" || mode=="proceed" || mode=="modified")){
             outGen.write("$mode is an incorrect mode" +
                     "correct ones are: normal, modified, proceed" +
                     "please choose one of them", "log.txt")
             System.exit(1)
         }
-        val currentTape:String = tape
+        val cTape:String = tape
 
         try {
             when (mode) {
                 //"normal" - just a normal mode
-                "normal" -> normal(currentTape, false, 0, 0)
+                "normal" -> normal(cTape, false, 0, 0)
 
                 //"modified" - program will be executed in $statesQuantity$ steps
-                "modified" -> normal(currentTape, true, 0, statesQuantity)
+                "modified" -> normal(cTape, true, 0, stepsQuantity)
 
                 /*"proceed" - program' execution will be continued from
              *if you wanna continue its execution in several steps, just choose
              * $statesQuantity$!=0
+             */
 
-                "proceed" -> normal(currentTape, true, number, statesQuantity)*/
+                "proceed" -> normal(currentTape, true, number, stepsQuantity)
             }
         }
         catch(E:IllegalArgumentException) {
@@ -97,10 +107,15 @@ class TMSimMachine() {                                               //just a *m
 
 
     private fun normal(tape:String, modified: Boolean, number: Int, stepsQuantity: Int) {
-            var currentTape: String = tape //ok
-            var currentPosition = 0
 
-            var currentState: State = states[number]
+            if(number==0) {
+                currentTape = tape                              //ok
+                currentPosition = 0
+
+                currentState = states[number]
+
+            }
+
             var counter = 0
 
             try {
@@ -150,7 +165,6 @@ class TMSimMachine() {                                               //just a *m
                         Command.Right -> currentPosition++
                         Command.Left -> currentPosition--
                         Command.IllegalCommand -> {
-
 
                             currentTape = tape
                             throw IllegalArgumentException(
